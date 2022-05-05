@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.dao.OrderDao">
+<resultMap id="OrderResult" type="org.example.domain.Order">
+    <id property="id" column="id"></id>
+    <result property="number" column="number"></result>
+    <collection property="products" ofType="org.example.domain.Product" resultMap="ProductResult"></collection>
+</resultMap>
+    <resultMap id="ProductResult" type="org.example.domain.Product">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="price" column="price"></result>
+        
+    </resultMap>
+ <select id="getAllOrdersAssoPro" resultMap="OrderResult">
+     SELECT ord.*,pro.* from tb_orders ord
+          LEFT JOIN tb_ordersitem mid ON mid.order_id=ord.id
+          LEFT JOIN tb_product pro ON pro.id=mid.product_id
+ </select>
+
+</mapper>
